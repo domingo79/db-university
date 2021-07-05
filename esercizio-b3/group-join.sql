@@ -1,14 +1,14 @@
 --GROUP BY:
 --Contare quanti iscritti ci sono stati ogni anno
-SELECT COUNT(*) AS numero_studenti_per_anno, YEAR(enrolment_date) AS year
+SELECT COUNT(id) AS iscritti, YEAR(`enrolment_date`) AS anno_iscrizione
 FROM students
-GROUP BY year;
+GROUP BY YEAR(`enrolment_date`)
 
 --Contare gli insegnanti che hanno l'ufficio nello stesso edificio
-SELECT COUNT(*) 
-AS numero_insegnanti, `office_address` 
+SELECT COUNT(id) 
+AS insegnanti, `office_address` AS edificio
 FROM `teachers` 
-GROUP BY `office_address`;
+GROUP BY edificio;
 
 --Calcolare la media dei voti di ogni appello d'esame
 SELECT AVG(`vote`) 
@@ -24,8 +24,19 @@ GROUP BY department_id;
 
 --JOINS:
 --Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia
+SELECT students.*
+FROM students
+JOIN degrees
+ON students.degree_id = degrees.id
+WHERE degrees.name = 'Corso di Laurea in Economia';
 
 -- Selezionare tutti i Corsi di Laurea del Dipartimento di Neuroscienze
+SELECT degrees.*
+FROM degrees
+JOIN departments
+ON
+degrees.department_id = department_id
+WHERE departments.name = 'Dipartimento di Neuroscienze';
 
 -- Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
 
