@@ -7,6 +7,7 @@ WHERE YEAR(`date_of_birth`) = 1990;
 SELECT * 
 FROM `courses` 
 WHERE `cfu`> 10;
+ORDER BY `cfu` ASC 
 
 -- 3.Selezionare tutti gli studenti che hanno più di 30 anni
 --SELECT *
@@ -44,3 +45,40 @@ FROM `departments`;
 SELECT * 
 FROM `teachers` 
 WHERE `phone` IS NULL;
+
+
+--qualche live
+SELECT COUNT(`id`) AS 'numero_corsi', `cfu`
+FROM `courses`
+GROUP BY cfu;
+
+-- selezionare tutti i corsi di laurea in informatica
+SELECT courses.id, courses.name, courses.period, courses.cfu
+FROM courses
+JOIN degrees
+ON courses.degree_id = degrees.id
+WHERE degrees.name = 'Corso di Laurea in Informatica';
+
+-- selezionare le informazioni sul corso id = 144, con tutti i rispettivi appelli d'esame
+SELECT courses.id, courses.name, courses.description, courses.period, courses.year, courses.cfu
+FROM `courses`
+JOIN `exams`
+ON `courses`.`id` = exams.course_id
+WHERE courses.id = 144;
+
+--selezionare a quale dipartimento appartiene il corso di laurea in dipartimento dell'economia
+SELECT departments.*
+FROM departments
+JOIN degrees
+ON departments.id = degrees.department_id
+WHERE degrees.name = `Corso di laurea....`
+
+-- selezionare tutti gli appelli d'esame del Corso di Laurea Magistrale in Fisica del primo anno
+SELECT courses.id AS corso_id, courses.name, courses.description
+FROM degrees
+JOIN courses
+ON degrees.id = courses.degree_id
+JOIN exams
+ON courses.id = exams.course_id
+WHERE degrees.name = 'Corso di Laurea Magistrale in Fisica'
+AND courses.year = 1;
