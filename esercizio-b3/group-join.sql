@@ -5,10 +5,16 @@ FROM students
 GROUP BY year;
 
 --Contare gli insegnanti che hanno l'ufficio nello stesso edificio
-SELECT COUNT(*) AS numero_insegnanti, `office_address` 
+SELECT COUNT(*) 
+AS numero_insegnanti, `office_address` 
 FROM `teachers` 
 GROUP BY `office_address`;
+
 --Calcolare la media dei voti di ogni appello d'esame
+SELECT AVG(`vote`) 
+AS `avarage_vote`, exam_id
+FROM `exam_student`
+GROUP BY exam_id;
 
 --Contare quanti corsi di laurea ci sono per ogni dipartimento
 
