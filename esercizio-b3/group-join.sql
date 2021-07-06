@@ -78,3 +78,22 @@ ON degrees.department_id = departments.id
 WHERE departments.name = "Dipartimento di Matematica";
 
 -- BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per superare ciascuno dei suoi esami
+--live andrei
+SELECT COUNT(courses.name) AS 'tentativi', students.name AS 'student_name', students.surname AS 'student_surname' , courses.name AS 'course_name' 
+FROM exam_student 
+JOIN exams 
+ON exam_student.exam_id = exams.id 
+JOIN students 
+ON exam_student.student_id = students.id 
+JOIN courses 
+ON exams.course_id = courses.id 
+GROUP BY students.id, courses.name
+
+--live emanuele
+SELECT students.name AS nome_studente, students.surname AS cognome_studente, courses.name AS nome_corso, COUNT(exams.id) AS tentativi
+FROM courses
+JOIN exams ON courses.id = exams.course_id
+JOIN exam_student ON exams.id  = exam_student.exam_id
+JOIN students ON exam_student.student_id = students.id
+WHERE exam_student.vote < 18
+GROUP BY courses.id, students.id
